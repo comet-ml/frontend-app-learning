@@ -62,7 +62,7 @@ const Section = ({
           />
         )}
       </div>
-      <div className="col-10 ml-3 p-0 font-weight-bold text-dark">
+      <div className="col-10 ml-3 p-0 font-weight-bold text-dark-500-comet">
         <span className="align-middle">{title}</span>
         <span className="sr-only">
           , {intl.formatMessage(complete ? messages.completedSection : messages.incompleteSection)}
