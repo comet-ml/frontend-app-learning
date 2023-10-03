@@ -10,11 +10,9 @@ import { AlertList } from '../../generic/user-messages';
 import Sequence from './sequence';
 
 import { CelebrationModal, shouldCelebrateOnSectionLoad, WeeklyGoalCelebrationModal } from './celebration';
-import Chat from './chat/Chat';
 import ContentTools from './content-tools';
 import CourseBreadcrumbs from './CourseBreadcrumbs';
 import SidebarProvider from './sidebar/SidebarContextProvider';
-import SidebarTriggers from './sidebar/SidebarTriggers';
 
 import { useModel } from '../../generic/model-store';
 import { getSessionStorage, setSessionStorage } from '../../data/sessionStorage';
@@ -51,7 +49,6 @@ const Course = ({
   const [weeklyGoalCelebrationOpen, setWeeklyGoalCelebrationOpen] = useState(
     celebrations && !celebrations.streakLengthToCelebrate && celebrations.weeklyGoal,
   );
-  const shouldDisplayTriggers = windowWidth >= breakpoints.small.minWidth;
   const daysPerWeek = course?.courseGoals?.selectedGoal?.daysPerWeek;
 
   // Responsive breakpoints for showing the notification button/tray
@@ -91,18 +88,6 @@ const Course = ({
           isStaff={isStaff}
           unitId={unitId}
         />
-        {shouldDisplayTriggers && (
-          <>
-            <Chat
-              enabled={course.learningAssistantEnabled}
-              enrollmentMode={course.enrollmentMode}
-              isStaff={isStaff}
-              courseId={courseId}
-              contentToolsEnabled={course.showCalculator || course.notes.enabled}
-            />
-            <SidebarTriggers />
-          </>
-        )}
       </div>
 
       <AlertList topic="sequence" />
