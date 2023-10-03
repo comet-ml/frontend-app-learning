@@ -8,7 +8,7 @@
 
 /* Overwrites */
 
-.text-dark-500 {
+.text-dark {
   color: #373D4D !important;
 }
 
@@ -21,7 +21,7 @@
 
   // A hacky way to hide the footer
   .footer {
-    display: none;
+    display: none !important;
   }
 
   main {
