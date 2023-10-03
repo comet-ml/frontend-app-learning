@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet';
 import { getConfig } from '@edx/frontend-platform';
 import { useToggle } from '@edx/paragon';
 
-import { CourseTabsNavigation } from '../course-tabs';
 import { useModel } from '../generic/model-store';
 import { AlertList } from '../generic/user-messages';
 import StreakModal from '../shared/streak-celebration';
@@ -26,8 +25,6 @@ const LoadedTabPage = ({
     celebrations,
     org,
     originalUserIsStaff,
-    tabs,
-    title,
     verifiedMode,
   } = useModel('courseHomeMeta', courseId);
 
@@ -35,8 +32,6 @@ const LoadedTabPage = ({
   // breadcrumbs when they are visible.
   const logistrationAlert = useLogistrationAlert(courseId);
   const enrollmentAlert = useEnrollmentAlert(courseId);
-
-  const activeTab = tabs.filter(tab => tab.slug === activeTabSlug)[0];
 
   const streakLengthToCelebrate = celebrations && celebrations.streakLengthToCelebrate;
   const streakDiscountCouponEnabled = celebrations && celebrations.streakDiscountEnabled && verifiedMode;
@@ -51,7 +46,7 @@ const LoadedTabPage = ({
         org={org}
       />
       <Helmet>
-        <title>{`${activeTab ? `${activeTab.title} | ` : ''}${title} | ${getConfig().SITE_NAME}`}</title>
+        <title>{`${getConfig().SITE_NAME}`}</title>
       </Helmet>
       {originalUserIsStaff && (
         <InstructorToolbar
@@ -78,7 +73,6 @@ const LoadedTabPage = ({
             ...logistrationAlert,
           }}
         />
-        <CourseTabsNavigation tabs={tabs} className="mb-3" activeTabSlug={activeTabSlug} />
         <div className="container-xl">
           {children}
         </div>

@@ -8,16 +8,12 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Button } from '@edx/paragon';
 import { AlertList } from '../../generic/user-messages';
 
-import CourseDates from './widgets/CourseDates';
-import CourseHandouts from './widgets/CourseHandouts';
 import StartOrResumeCourseCard from './widgets/StartOrResumeCourseCard';
 import WeeklyLearningGoalCard from './widgets/WeeklyLearningGoalCard';
-import CourseTools from './widgets/CourseTools';
 import { fetchOutlineTab } from '../data';
 import messages from './messages';
 import Section from './Section';
 import ShiftDatesAlert from '../suggested-schedule-messaging/ShiftDatesAlert';
-import UpgradeNotification from '../../generic/upgrade-notification/UpgradeNotification';
 import UpgradeToShiftDatesAlert from '../suggested-schedule-messaging/UpgradeToShiftDatesAlert';
 import useCertificateAvailableAlert from './alerts/certificate-status-alert';
 import useCourseEndAlert from './alerts/course-end-alert';
@@ -26,7 +22,6 @@ import usePrivateCourseAlert from './alerts/private-course-alert';
 import useScheduledContentAlert from './alerts/scheduled-content-alert';
 import { useModel } from '../../generic/model-store';
 import WelcomeMessage from './widgets/WelcomeMessage';
-import ProctoringInfoPanel from './widgets/ProctoringInfoPanel';
 import AccountActivationAlert from '../../alerts/logistration-alert/AccountActivationAlert';
 
 const OutlineTab = ({ intl }) => {
@@ -39,11 +34,9 @@ const OutlineTab = ({ intl }) => {
     isSelfPaced,
     org,
     title,
-    userTimezone,
   } = useModel('courseHomeMeta', courseId);
 
   const {
-    accessExpiration,
     courseBlocks: {
       courses,
       sections,
@@ -52,19 +45,11 @@ const OutlineTab = ({ intl }) => {
       selectedGoal,
       weeklyLearningGoalEnabled,
     } = {},
-    datesBannerInfo,
     datesWidget: {
       courseDateBlocks,
     },
     enableProctoredExams,
-    offer,
-    timeOffsetMillis,
-    verifiedMode,
   } = useModel('outline', courseId);
-
-  const {
-    marketingUrl,
-  } = useModel('coursewareMeta', courseId);
 
   const [expandAll, setExpandAll] = useState(false);
 
@@ -182,7 +167,6 @@ const OutlineTab = ({ intl }) => {
         </div>
         {rootCourseId && (
           <div className="col col-12 col-md-4">
-            <ProctoringInfoPanel />
             { /** Defer showing the goal widget until the ProctoringInfoPanel has resolved or has been determined as
              disabled to avoid components bouncing around too much as screen is rendered */ }
             {(!enableProctoredExams || proctoringPanelStatus === 'loaded') && weeklyLearningGoalEnabled && (
@@ -191,22 +175,6 @@ const OutlineTab = ({ intl }) => {
                 subscribedToReminders={selectedGoal && 'subscribedToReminders' in selectedGoal ? selectedGoal.subscribedToReminders : false}
               />
             )}
-            <CourseTools />
-            <UpgradeNotification
-              offer={offer}
-              verifiedMode={verifiedMode}
-              accessExpiration={accessExpiration}
-              contentTypeGatingEnabled={datesBannerInfo.contentTypeGatingEnabled}
-              marketingUrl={marketingUrl}
-              upsellPageName="course_home"
-              userTimezone={userTimezone}
-              shouldDisplayBorder
-              timeOffsetMillis={timeOffsetMillis}
-              courseId={courseId}
-              org={org}
-            />
-            <CourseDates />
-            <CourseHandouts />
           </div>
         )}
       </div>
