@@ -1,7 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React, {
-  useEffect, useState,
-} from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {
@@ -22,7 +20,7 @@ import Sidebar from '../sidebar/Sidebar';
 import SidebarTriggers from '../sidebar/SidebarTriggers';
 import messages from './messages';
 import HiddenAfterDue from './hidden-after-due';
-import { SequenceNavigation, UnitNavigation } from './sequence-navigation';
+import { SequenceNavigation } from './sequence-navigation';
 import SequenceContent from './SequenceContent';
 
 const Sequence = ({
@@ -40,7 +38,6 @@ const Sequence = ({
     originalUserIsStaff,
   } = useModel('courseHomeMeta', courseId);
   const sequence = useModel('sequences', sequenceId);
-  const unit = useModel('units', unitId);
   const sequenceStatus = useSelector(state => state.courseware.sequenceStatus);
   const sequenceMightBeUnit = useSelector(state => state.courseware.sequenceMightBeUnit);
   const shouldDisplayNotificationTriggerInSequence = useWindowSize().width < breakpoints.small.minWidth;
@@ -102,21 +99,6 @@ const Sequence = ({
     global.addEventListener('message', receiveMessage);
   }, []);
 
-  const [unitHasLoaded, setUnitHasLoaded] = useState(false);
-  const handleUnitLoaded = () => {
-    setUnitHasLoaded(true);
-  };
-
-  // We want hide the unit navigation if we're in the middle of navigating to another unit
-  // but not if other things about the unit change, like the bookmark status.
-  // The array property of this useEffect ensures that we only hide the unit navigation
-  // while navigating to another unit.
-  useEffect(() => {
-    if (unit) {
-      setUnitHasLoaded(false);
-    }
-  }, [(unit || {}).id]);
-
   // If sequence might be a unit, we want to keep showing a spinner - the courseware container will redirect us when
   // it knows which sequence to actually go to.
   const loading = sequenceStatus === 'loading' || (sequenceStatus === 'failed' && sequenceMightBeUnit);
@@ -167,22 +149,7 @@ const Sequence = ({
             gated={gated}
             sequenceId={sequenceId}
             unitId={unitId}
-            unitLoadedHandler={handleUnitLoaded}
           />
-          {unitHasLoaded && (
-          <UnitNavigation
-            sequenceId={sequenceId}
-            unitId={unitId}
-            onClickPrevious={() => {
-              logEvent('edx.ui.lms.sequence.previous_selected', 'bottom');
-              handlePrevious();
-            }}
-            onClickNext={() => {
-              logEvent('edx.ui.lms.sequence.next_selected', 'bottom');
-              handleNext();
-            }}
-          />
-          )}
         </div>
       </div>
       <Sidebar />
