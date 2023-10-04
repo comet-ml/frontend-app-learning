@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { LearningHeader as Header } from '@edx/frontend-component-header';
+import { LearningHeader as Header } from 'frontend-component-header';
 import Footer from '@edx/frontend-component-footer';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
