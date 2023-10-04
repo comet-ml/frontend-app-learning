@@ -22,6 +22,7 @@ const UpgradeButton = (props) => {
     <Button
       variant={variant}
       href={url}
+      className="comet-button"
       onClick={onClick}
       {...rest}
     >

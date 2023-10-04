@@ -47,6 +47,7 @@ const StartOrResumeCourseCard = ({ intl }) => {
         actions={(
           <Button
             variant="brand"
+            className="comet-button"
             block
             href={resumeCourseUrl}
             onClick={() => logResumeCourseClick()}

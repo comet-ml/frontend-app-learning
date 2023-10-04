@@ -50,6 +50,7 @@ const NewUserCourseHomeTourModal = ({
         </Button>
         <Button
           variant="brand"
+          className="comet-button"
           onClick={onStartTour}
         >
           {intl.formatMessage(messages.beginTour)}
