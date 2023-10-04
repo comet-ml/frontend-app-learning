@@ -42,7 +42,7 @@ const Section = ({
   }, []);
 
   const sectionTitle = (
-    <div className="row w-100 m-0">
+    <div className="row w-100 m-0 align-items-center">
       <div className="col-auto p-0">
         {complete ? (
           <FontAwesomeIcon
@@ -74,7 +74,7 @@ const Section = ({
   return (
     <li>
       <Collapsible
-        className="mb-2"
+        className="mb-2 comet-collapsible"
         styling="card-lg"
         title={sectionTitle}
         open={open}

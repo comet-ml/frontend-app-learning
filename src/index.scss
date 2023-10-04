@@ -17,6 +17,25 @@
   border-color: #5155F5 !important;
 }
 
+.comet-collapsible {
+  .collapsible-trigger {
+    padding-left: 0.75rem !important;
+  }
+  .collapsible-body {
+    padding-top: 0px !important;
+  }
+}
+
+.comet-card {
+  .pgn__card-header-content {
+    margin: 0 !important;
+  }
+  .pgn__card-header-actions {
+    margin: 0 !important;
+    margin-inline-start: 0 !important;
+  }
+}
+
 /* Core styles */
 
 #root {

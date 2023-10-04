@@ -41,9 +41,10 @@ const StartOrResumeCourseCard = ({ intl }) => {
   };
 
   return (
-    <Card className="mb-3 raised-card" data-testid="start-resume-card">
+    <Card className="raised-card comet-card" style={{ marginBottom: '1.25rem' }} data-testid="start-resume-card">
       <Card.Header
         title={hasVisitedCourse ? intl.formatMessage(messages.resumeBlurb) : intl.formatMessage(messages.startBlurb)}
+        className="align-items-center"
         actions={(
           <Button
             variant="brand"
@@ -56,9 +57,6 @@ const StartOrResumeCourseCard = ({ intl }) => {
           </Button>
         )}
       />
-      {/* Footer is needed for internal vertical spacing to work out. If you can remove, be my guest */}
-      {/* eslint-disable-next-line react/jsx-no-useless-fragment */}
-      <Card.Footer><></></Card.Footer>
     </Card>
   );
 };
