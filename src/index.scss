@@ -27,6 +27,9 @@
 }
 
 .comet-card {
+  .pgn__card-header {
+    padding: 0 1.25rem 1.25rem 1.25rem !important;
+  }
   .pgn__card-header-content {
     margin: 0 !important;
   }

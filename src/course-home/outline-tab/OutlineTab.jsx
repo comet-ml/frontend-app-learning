@@ -144,7 +144,7 @@ const OutlineTab = ({ intl }) => {
           <WelcomeMessage courseId={courseId} />
           {rootCourseId && (
             <>
-              <div className="row w-100 m-0 justify-content-end" style={{ marginBottom: '1.25rem' }}>
+              <div className="row w-100 justify-content-end" style={{ marginBottom: '1.25rem', marginRight: '0' }}>
                 <div className="col-12 col-md-auto p-0">
                   <Button variant="outline-primary" block onClick={() => { setExpandAll(!expandAll); }}>
                     {expandAll ? intl.formatMessage(messages.collapseAll) : intl.formatMessage(messages.expandAll)}
