@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import { getConfig } from '@edx/frontend-platform';
@@ -36,10 +36,18 @@ const PrivateCourseAlert = ({ intl, payload }) => {
     intl.formatMessage(enrollmentMessages.success),
   );
 
-  const enroll = async () => {
-    await postCourseEnrollment(courseId);
-    history.go(0);
-  };
+  useEffect(() => {
+    if (!anonymousUser && !!courseId) {
+      const enroll = async () => {
+        await postCourseEnrollment(courseId);
+        history.go(0);
+      };
+
+      console.log('trying to enroll');
+
+      enroll().catch(e => console.error(e));
+    }
+  }, [anonymousUser, courseId]);
 
   const enrollNowButton = (
     <Button
@@ -91,7 +99,7 @@ const PrivateCourseAlert = ({ intl, payload }) => {
         </>
       )}
       {!anonymousUser && (
-        <div onLoad={enroll}>
+        <div>
           <FontAwesomeIcon icon={faSpinner} spin />
         </div>
       )}
