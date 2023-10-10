@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
+import { useHistory } from 'react-router';
 import PropTypes from 'prop-types';
 import { getConfig } from '@edx/frontend-platform';
 import { injectIntl, intlShape, FormattedMessage } from '@edx/frontend-platform/i18n';
@@ -13,8 +15,10 @@ import messages from './messages';
 import outlineMessages from '../../messages';
 import useEnrollClickHandler from '../../../../alerts/enrollment-alert/clickHook';
 import { useModel } from '../../../../generic/model-store';
+import { postCourseEnrollment } from '../../../../alerts/enrollment-alert/data/api';
 
 const PrivateCourseAlert = ({ intl, payload }) => {
+  const history = useHistory();
   const {
     anonymousUser,
     canEnroll,
@@ -31,6 +35,11 @@ const PrivateCourseAlert = ({ intl, payload }) => {
     org,
     intl.formatMessage(enrollmentMessages.success),
   );
+
+  const enroll = async () => {
+    await postCourseEnrollment(courseId);
+    history.go(0);
+  };
 
   const enrollNowButton = (
     <Button
@@ -82,21 +91,9 @@ const PrivateCourseAlert = ({ intl, payload }) => {
         </>
       )}
       {!anonymousUser && (
-        <>
-          <p className="font-weight-bold">{intl.formatMessage(outlineMessages.welcomeTo)} {title}</p>
-          {canEnroll && (
-            <div className="d-flex">
-              {enrollNowButton}
-              {intl.formatMessage(messages.toAccess)}
-              {loading && <FontAwesomeIcon icon={faSpinner} spin />}
-            </div>
-          )}
-          {!canEnroll && (
-            <>
-              {intl.formatMessage(enrollmentMessages.alert)}
-            </>
-          )}
-        </>
+        <div onLoad={enroll}>
+          <FontAwesomeIcon icon={faSpinner} spin />
+        </div>
       )}
     </Alert>
   );
