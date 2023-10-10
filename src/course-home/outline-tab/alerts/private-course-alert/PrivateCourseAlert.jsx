@@ -43,8 +43,6 @@ const PrivateCourseAlert = ({ intl, payload }) => {
         history.go(0);
       };
 
-      console.log('trying to enroll');
-
       enroll().catch(e => console.error(e));
     }
   }, [anonymousUser, courseId]);

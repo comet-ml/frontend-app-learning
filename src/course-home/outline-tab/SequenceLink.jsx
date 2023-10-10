@@ -85,7 +85,7 @@ const SequenceLink = ({
 
   return (
     <li>
-      <div className={classNames('', { 'mt-2 pt-2 border-top border-light': !first })}>
+      <div className={classNames('', { 'mt-2 pt-2 border-top border-light': !first, 'mt-1 pt-1': first })}>
         <div className="row w-100 m-0 align-items-center">
           <div className="col-auto p-0">
             {complete ? (
