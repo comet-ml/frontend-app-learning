@@ -37,7 +37,6 @@ const Unit = ({
 
   return (
     <div className="unit">
-      <h1 className="mb-0 h3">{unit.title}</h1>
       <h2 className="sr-only">{formatMessage(messages.headerPlaceholder)}</h2>
       <BookmarkButton
         unitId={unit.id}
