@@ -31,7 +31,7 @@ export function getAccessDeniedRedirectUrl(courseId, activeTabSlug, courseAccess
     case 'enrollment_required':
     default:
       if (activeTabSlug !== 'outline') {
-        url = `/course/${courseId}/home`;
+        url = 'https://apps.tutor.nothingtochere.com/authn/register';
       }
   }
   return url;
