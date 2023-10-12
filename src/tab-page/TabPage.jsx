@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,7 +20,7 @@ import useAuthRedirect from '../shared/hooks/useAuthRedirect';
 
 const TabPage = ({ intl, ...props }) => {
   useAuthRedirect();
-  useEffect(() => console.log('Tab page'), []);
+
   const {
     activeTabSlug,
     courseId,

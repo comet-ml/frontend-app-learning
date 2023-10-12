@@ -35,72 +35,81 @@ import PathFixesProvider from './generic/path-fixes';
 import LiveTab from './course-home/live-tab/LiveTab';
 import CourseAccessErrorPage from './generic/CourseAccessErrorPage';
 import DecodePageRoute from './decode-page-route';
+import GoogleAnalyticsWrapper from './shared/GoogleAnalytics';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
     <AppProvider store={initializeStore()}>
       <Helmet>
         <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
+        <script>{`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-MNMH9KJ');`}
+        </script>
       </Helmet>
-      <PathFixesProvider>
-        <NoticesProvider>
-          <UserMessagesProvider>
-            <Switch>
-              <PageRoute exact path="/goal-unsubscribe/:token" component={GoalUnsubscribe} />
-              <PageRoute path="/redirect" component={CoursewareRedirectLandingPage} />
-              <DecodePageRoute path="/course/:courseId/access-denied" component={CourseAccessErrorPage} />
-              <DecodePageRoute path="/course/:courseId/home">
-                <TabContainer tab="outline" fetch={fetchOutlineTab} slice="courseHome">
-                  <OutlineTab />
-                </TabContainer>
-              </DecodePageRoute>
-              <DecodePageRoute path="/course/:courseId/live">
-                <TabContainer tab="lti_live" fetch={fetchLiveTab} slice="courseHome">
-                  <LiveTab />
-                </TabContainer>
-              </DecodePageRoute>
-              <DecodePageRoute path="/course/:courseId/dates">
-                <TabContainer tab="dates" fetch={fetchDatesTab} slice="courseHome">
-                  <DatesTab />
-                </TabContainer>
-              </DecodePageRoute>
-              <DecodePageRoute path="/course/:courseId/discussion/:path*">
-                <TabContainer tab="discussion" fetch={fetchDiscussionTab} slice="courseHome">
-                  <DiscussionTab />
-                </TabContainer>
-              </DecodePageRoute>
-              <DecodePageRoute
-                path={[
-                  '/course/:courseId/progress/:targetUserId/',
-                  '/course/:courseId/progress',
-                ]}
-                render={({ match }) => (
-                  <TabContainer
-                    tab="progress"
-                    fetch={(courseId) => fetchProgressTab(courseId, match.params.targetUserId)}
-                    slice="courseHome"
-                  >
-                    <ProgressTab />
+      <GoogleAnalyticsWrapper>
+        <PathFixesProvider>
+          <NoticesProvider>
+            <UserMessagesProvider>
+              <Switch>
+                <PageRoute exact path="/goal-unsubscribe/:token" component={GoalUnsubscribe} />
+                <PageRoute path="/redirect" component={CoursewareRedirectLandingPage} />
+                <DecodePageRoute path="/course/:courseId/access-denied" component={CourseAccessErrorPage} />
+                <DecodePageRoute path="/course/:courseId/home">
+                  <TabContainer tab="outline" fetch={fetchOutlineTab} slice="courseHome">
+                    <OutlineTab />
                   </TabContainer>
-                )}
-              />
-              <DecodePageRoute path="/course/:courseId/course-end">
-                <TabContainer tab="courseware" fetch={fetchCourse} slice="courseware">
-                  <CourseExit />
-                </TabContainer>
-              </DecodePageRoute>
-              <DecodePageRoute
-                path={[
-                  '/course/:courseId/:sequenceId/:unitId',
-                  '/course/:courseId/:sequenceId',
-                  '/course/:courseId',
-                ]}
-                component={CoursewareContainer}
-              />
-            </Switch>
-          </UserMessagesProvider>
-        </NoticesProvider>
-      </PathFixesProvider>
+                </DecodePageRoute>
+                <DecodePageRoute path="/course/:courseId/live">
+                  <TabContainer tab="lti_live" fetch={fetchLiveTab} slice="courseHome">
+                    <LiveTab />
+                  </TabContainer>
+                </DecodePageRoute>
+                <DecodePageRoute path="/course/:courseId/dates">
+                  <TabContainer tab="dates" fetch={fetchDatesTab} slice="courseHome">
+                    <DatesTab />
+                  </TabContainer>
+                </DecodePageRoute>
+                <DecodePageRoute path="/course/:courseId/discussion/:path*">
+                  <TabContainer tab="discussion" fetch={fetchDiscussionTab} slice="courseHome">
+                    <DiscussionTab />
+                  </TabContainer>
+                </DecodePageRoute>
+                <DecodePageRoute
+                  path={[
+                    '/course/:courseId/progress/:targetUserId/',
+                    '/course/:courseId/progress',
+                  ]}
+                  render={({ match }) => (
+                    <TabContainer
+                      tab="progress"
+                      fetch={(courseId) => fetchProgressTab(courseId, match.params.targetUserId)}
+                      slice="courseHome"
+                    >
+                      <ProgressTab />
+                    </TabContainer>
+                  )}
+                />
+                <DecodePageRoute path="/course/:courseId/course-end">
+                  <TabContainer tab="courseware" fetch={fetchCourse} slice="courseware">
+                    <CourseExit />
+                  </TabContainer>
+                </DecodePageRoute>
+                <DecodePageRoute
+                  path={[
+                    '/course/:courseId/:sequenceId/:unitId',
+                    '/course/:courseId/:sequenceId',
+                    '/course/:courseId',
+                  ]}
+                  component={CoursewareContainer}
+                />
+              </Switch>
+            </UserMessagesProvider>
+          </NoticesProvider>
+        </PathFixesProvider>
+      </GoogleAnalyticsWrapper>
     </AppProvider>,
     document.getElementById('root'),
   );
