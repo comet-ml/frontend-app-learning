@@ -11,7 +11,6 @@ const CourseTabsNavigation = ({
 }) => (
   <div id="courseTabsNavigation" className={classNames('course-tabs-navigation', className)}>
     <div className="container-xl">
-      HELLO HELLO I AM TESTING THINGS
       <Tabs
         className="nav-underline-tabs"
         aria-label={intl.formatMessage(messages.courseMaterial)}

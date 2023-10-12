@@ -1,9 +1,7 @@
 import React, {
-  useState, useRef, useEffect, useMemo, useContext,
+  useState, useRef, useEffect, useMemo,
 } from 'react';
-import { redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { AppContext } from '@edx/frontend-platform/react';
 
 import UserMessagesContext from './UserMessagesContext';
 import { getLocalStorage, popLocalStorage, setLocalStorage } from '../../data/localStorage';
@@ -41,7 +39,6 @@ const UserMessagesProvider = ({ children }) => {
   // all to override each other.  Last one in would win.
   const [messages, setMessages] = useState([]);
   const [nextId, setNextId] = useState(1);
-  const { authenticatedUser } = useContext(AppContext);
 
   // Because the add, remove, and clear handlers also need to access nextId, we have to do
   // something a bit different.  There's no way to wait for the "currentNextId" in a setMessages
@@ -77,13 +74,6 @@ const UserMessagesProvider = ({ children }) => {
   function clear(topic = null) {
     setMessages(currentMessages => (topic === null ? [] : currentMessages.filter(message => message.topic !== topic)));
   }
-
-  // This should really be in its own provider, but for now this works
-  useEffect(() => {
-    if (!authenticatedUser) {
-      redirect('/authn/register');
-    }
-  }, [authenticatedUser]);
 
   useEffect(() => {
     // We only allow flash messages to persist through one refresh, then we clear them out.

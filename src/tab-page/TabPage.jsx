@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,8 +16,11 @@ import messages from './messages';
 import LoadedTabPage from './LoadedTabPage';
 import { setCallToActionToast } from '../course-home/data/slice';
 import LaunchCourseHomeTourButton from '../product-tours/newUserCourseHomeTour/LaunchCourseHomeTourButton';
+import useAuthRedirect from '../shared/hooks/useAuthRedirect';
 
 const TabPage = ({ intl, ...props }) => {
+  useAuthRedirect();
+  useEffect(() => console.log('Tab page'), []);
   const {
     activeTabSlug,
     courseId,
