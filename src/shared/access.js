@@ -31,7 +31,7 @@ export function getAccessDeniedRedirectUrl(courseId, activeTabSlug, courseAccess
     case 'enrollment_required':
     default:
       if (activeTabSlug !== 'outline') {
-        url = 'https://apps.tutor.nothingtochere.com/authn/register';
+        url = 'https://apps.courses.comet.com/authn/register';
       }
   }
   return url;
